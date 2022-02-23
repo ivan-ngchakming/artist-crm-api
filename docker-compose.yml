@@ -21,7 +21,7 @@ services:
       - postgres
   postgres:
     container_name: postgres
-    image: postgres:12
+    image: postgres:13
     networks:
       - webnet
     environment:
