@@ -1,29 +1,31 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 import { Address } from '../../addresses/entities/address.entity';
 
 @Entity()
-export class Customer {
+export class Customer extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   firstName: string;
 
-  @Column()
+  @Column({ nullable: true })
   lastName: string;
 
-  @Column()
-  preferred_name: string;
+  @Column({ nullable: true })
+  preferredName: string;
 
-  @Column()
+  @Column({ nullable: true })
   instagram: string;
 
-  @Column()
+  @Column({ nullable: true })
   email: string;
 
-  @OneToOne(() => Address)
+  @OneToOne(() => Address, { nullable: true })
+  @JoinColumn()
   address: Address;
 
-  @OneToOne(() => Address)
+  @OneToOne(() => Address, { nullable: true })
+  @JoinColumn()
   correspondenceAddress: Address;
 }

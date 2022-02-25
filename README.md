@@ -36,5 +36,5 @@ yarn typeorm migration:generate -n <name of migration file>
 Run migration
 
 ```bash
-
+yarn typeorm migration:run
 ```

@@ -1,4 +1,12 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+function getMigrationDirectory() {
+	const directory = process.env.NODE_ENV === 'migration' ? 'src' : `${__dirname}`;
+	return `${directory}/migrations/**/*{.ts,.js}`;
+}
 
 const pgConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -7,8 +15,9 @@ const pgConfig: TypeOrmModuleOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE_NAME,
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  migrations: ['migration/*{.ts,.js}'],
+  entities: ['dist/**/*.entity.js'],
+  migrationsRun: false,
+  migrations: [getMigrationDirectory()],
   cli: {
     migrationsDir: 'migration',
   },
