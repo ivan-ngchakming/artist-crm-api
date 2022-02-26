@@ -20,7 +20,7 @@ const pgConfig: TypeOrmModuleOptions = {
   migrationsRun: false,
   migrations: [getMigrationDirectory()],
   cli: {
-    migrationsDir: 'migration',
+    migrationsDir: 'src/migration',
   },
   synchronize: true, // TODO: set false in production
 };
