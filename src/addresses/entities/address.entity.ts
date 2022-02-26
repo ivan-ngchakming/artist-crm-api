@@ -8,6 +8,6 @@ export class Address extends BaseEntity {
   @Column()
   lineOne: string;
 
-  @Column()
+  @Column({ nullable: true })
   lineTwo: string;
 }

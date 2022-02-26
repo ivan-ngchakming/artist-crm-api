@@ -28,11 +28,11 @@ export class Customer extends BaseEntity {
   @Column({ nullable: true })
   email: string;
 
-  @OneToOne(() => Address, { nullable: true })
+  @OneToOne(() => Address, { nullable: true, eager: true, onDelete: 'CASCADE' })
   @JoinColumn()
   address: Address;
 
-  @OneToOne(() => Address, { nullable: true })
+  @OneToOne(() => Address, { nullable: true, eager: true, onDelete: 'CASCADE' })
   @JoinColumn()
   correspondenceAddress: Address;
 }
