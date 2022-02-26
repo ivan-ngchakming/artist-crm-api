@@ -1,4 +1,11 @@
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Address } from '../../addresses/entities/address.entity';
 
 @Entity()

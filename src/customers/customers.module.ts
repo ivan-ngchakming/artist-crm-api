@@ -8,6 +8,6 @@ import { Address } from 'src/addresses/entities/address.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Customer, Address])],
   controllers: [CustomersController],
-  providers: [CustomersService]
+  providers: [CustomersService],
 })
 export class CustomersModule {}

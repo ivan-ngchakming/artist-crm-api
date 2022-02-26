@@ -4,8 +4,9 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 function getMigrationDirectory() {
-	const directory = process.env.NODE_ENV === 'migration' ? 'src' : `${__dirname}`;
-	return `${directory}/migrations/**/*{.ts,.js}`;
+  const directory =
+    process.env.NODE_ENV === 'migration' ? 'src' : `${__dirname}`;
+  return `${directory}/migrations/**/*{.ts,.js}`;
 }
 
 const pgConfig: TypeOrmModuleOptions = {

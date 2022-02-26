@@ -13,7 +13,7 @@ export class CustomersService {
   ) {}
 
   async create(createCustomerDto: CreateCustomerDto) {
-    console.log(createCustomerDto)
+    console.log(createCustomerDto);
     const customerEntity = Customer.create(createCustomerDto);
     await Customer.save(customerEntity);
     return customerEntity;
