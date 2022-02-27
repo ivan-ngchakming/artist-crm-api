@@ -3,20 +3,18 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const pgConfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT),
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE_NAME,
+  url: process.env.DATABASE_URL,
   entities: ['dist/**/*.entity.js'],
-  migrationsRun: false,
+  migrationsRun: isProduction,
   migrations: ['src/migrations/**/*{.ts,.js}'],
   cli: {
     migrationsDir: 'src/migration',
   },
-  synchronize: true, // TODO: set false in production
+  synchronize: !isProduction,
 };
 
 export default pgConfig;

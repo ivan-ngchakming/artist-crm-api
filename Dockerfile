@@ -12,6 +12,7 @@ COPY . .
 
 RUN yarn build
 
+# ---
 
 FROM node:14.18.1-alpine as production
 
