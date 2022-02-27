@@ -15,7 +15,7 @@ docker compose up dev
 Create `.env` file at root directory.
 
 ```bash
-SERVER_PORT=8000
+PORT=8000
 
 # Database
 DB_PORT=5432
