@@ -8,6 +8,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const pgConfig: TypeOrmModuleOptions = {
   type: 'postgres',
   url: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
   entities: ['dist/**/*.entity.js'],
   migrationsRun: isProduction,
   migrations: ['src/migrations/**/*{.ts,.js}'],
