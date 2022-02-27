@@ -13,9 +13,7 @@ export class AddressesService {
   ) {}
 
   async create(createAddressDto: CreateAddressDto) {
-    const addressEntity = Address.create(createAddressDto);
-    await Address.save(addressEntity);
-    return addressEntity;
+    return this.addressRepository.create(createAddressDto);
   }
 
   findAll() {
@@ -27,7 +25,7 @@ export class AddressesService {
   }
 
   async update(id: number, updateAddressDto: UpdateAddressDto) {
-    await this.addressRepository.update({ id: id }, updateAddressDto);
+    await this.addressRepository.update(id, updateAddressDto);
     return this.findOne(id);
   }
 
