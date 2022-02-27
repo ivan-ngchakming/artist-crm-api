@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -31,10 +32,10 @@ export class CustomersService {
   async update(id: number, updateCustomerDto: UpdateCustomerDto) {
     const customerEntity =
       (await this.findOne(id)) || (await this.customerRepository.create());
-    return this.customerRepository.save({
-      ...customerEntity,
-      ...updateCustomerDto,
-    });
+
+    return this.customerRepository.save(
+      _.merge(customerEntity, updateCustomerDto),
+    );
   }
 
   async remove(id: number) {
