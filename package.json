@@ -80,5 +80,8 @@
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": "eslint --cache --fix",
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "engines": {
+      "node": "14.18.1"
   }
 }
