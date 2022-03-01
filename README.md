@@ -1,5 +1,7 @@
 # Artist CRM API
 
+Back-end for https://github.com/ivan-ngchakming/artist-crm-web
+
 ## Setup Development Environment
 
 ### Docker
