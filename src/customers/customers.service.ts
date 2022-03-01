@@ -1,7 +1,14 @@
 import * as _ from 'lodash';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindConditions, Repository } from 'typeorm';
+import {
+  FilterOperator,
+  Paginate,
+  PaginateQuery,
+  paginate,
+  Paginated,
+} from 'nestjs-paginate';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Customer } from './entities/customer.entity';
@@ -21,8 +28,12 @@ export class CustomersService {
     });
   }
 
-  findAll() {
-    return this.customerRepository.find();
+  findAll(query: PaginateQuery): Promise<Paginated<Customer>> {
+    return paginate(query, this.customerRepository, {
+      sortableColumns: ['id', 'updatedDate', 'createdDate'],
+      searchableColumns: ['fullName'],
+      defaultSortBy: [['id', 'DESC']],
+    });
   }
 
   findOne(id: number) {

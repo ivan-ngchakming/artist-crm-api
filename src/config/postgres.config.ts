@@ -10,11 +10,6 @@ const pgConfig: TypeOrmModuleOptions = {
   url: process.env.DATABASE_URL,
   ssl: isProduction ? { rejectUnauthorized: false } : undefined,
   entities: ['dist/**/*.entity.js'],
-  migrationsRun: isProduction,
-  migrations: ['src/migrations/**/*{.ts,.js}'],
-  cli: {
-    migrationsDir: 'src/migration',
-  },
   synchronize: !isProduction,
 };
 

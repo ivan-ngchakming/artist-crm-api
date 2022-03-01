@@ -5,7 +5,10 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+import { Expose } from 'class-transformer';
 import { Address } from '../../addresses/entities/address.entity';
 
 @Entity()
@@ -14,10 +17,10 @@ export class Customer extends BaseEntity {
   id: number;
 
   @Column({ nullable: true })
-  firstName: string;
+  public firstName: string;
 
   @Column({ nullable: true })
-  lastName: string;
+  public lastName: string;
 
   @Column({ nullable: true })
   preferredName: string;
@@ -45,4 +48,16 @@ export class Customer extends BaseEntity {
   })
   @JoinColumn()
   correspondenceAddress: Address;
+
+  @CreateDateColumn()
+  createdDate: Date;
+
+  @UpdateDateColumn()
+  updatedDate: Date;
+
+  @Column({
+    generatedType: 'STORED',
+    asExpression: `"firstName" || ' ' || "lastName" || ' ' || "preferredName"`,
+  })
+  fullName: string;
 }

@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { Paginate, PaginateQuery } from 'nestjs-paginate';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
@@ -21,8 +22,8 @@ export class CustomersController {
   }
 
   @Get()
-  findAll() {
-    return this.customersService.findAll();
+  async findAll(@Paginate() query: PaginateQuery) {
+    return this.customersService.findAll(query);
   }
 
   @Get(':id')
