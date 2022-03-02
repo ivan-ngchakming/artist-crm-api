@@ -30,8 +30,8 @@ export class CustomersService {
 
   findAll(query: PaginateQuery): Promise<Paginated<Customer>> {
     return paginate(query, this.customerRepository, {
-      sortableColumns: ['id', 'updatedDate', 'createdDate'],
-      searchableColumns: ['fullName'],
+      sortableColumns: ['id', 'updatedDate', 'createdDate', 'status'],
+      searchableColumns: ['fullName', 'instagram', 'email'],
       defaultSortBy: [['id', 'DESC']],
     });
   }

@@ -8,7 +8,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Expose } from 'class-transformer';
 import { Address } from '../../addresses/entities/address.entity';
 
 @Entity()
@@ -30,6 +29,9 @@ export class Customer extends BaseEntity {
 
   @Column({ nullable: true })
   email: string;
+
+  @Column()
+  status: string;
 
   @OneToOne(() => Address, {
     nullable: true,
@@ -58,6 +60,7 @@ export class Customer extends BaseEntity {
   @Column({
     generatedType: 'STORED',
     asExpression: `"firstName" || ' ' || "lastName" || ' ' || "preferredName"`,
+    nullable: true,
   })
   fullName: string;
 }
