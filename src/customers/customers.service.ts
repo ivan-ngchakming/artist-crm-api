@@ -32,7 +32,10 @@ export class CustomersService {
     return paginate(query, this.customerRepository, {
       sortableColumns: ['id', 'updatedDate', 'createdDate', 'status'],
       searchableColumns: ['fullName', 'instagram', 'email'],
-      defaultSortBy: [['id', 'DESC']],
+      defaultSortBy: [['updatedDate', 'DESC']],
+      filterableColumns: {
+        status: [FilterOperator.EQ],
+      },
     });
   }
 
