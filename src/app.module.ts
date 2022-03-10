@@ -6,9 +6,15 @@ import { AppService } from './app.service';
 import { CustomersModule } from './customers/customers.module';
 import { AddressesModule } from './addresses/addresses.module';
 import pgConfig from './config/postgres.config';
+import { EmailsModule } from './emails/emails.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(pgConfig), CustomersModule, AddressesModule],
+  imports: [
+    TypeOrmModule.forRoot(pgConfig),
+    CustomersModule,
+    AddressesModule,
+    EmailsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
