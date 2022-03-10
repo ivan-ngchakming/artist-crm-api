@@ -20,7 +20,7 @@ export class EmailsController {
       host: 'imap.gmail.com',
       port: 993,
       secure: true,
-      logger: false,
+      // logger: false,
     });
   }
 }
