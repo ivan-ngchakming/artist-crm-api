@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import {
   FetchQueryObject,
   ImapFlow,
@@ -6,26 +6,64 @@ import {
   SequenceString,
   FetchMessageObject,
 } from 'imapflow';
+import * as bcrypt from 'bcrypt';
+
+type IMapClientCache = {
+  client: ImapFlow;
+  hashedPass: string;
+};
 
 @Injectable()
 export class EmailsService {
-  private clients: { [k in string]: ImapFlow } = {};
+  private clientsCache: { [k in string]: IMapClientCache } = {};
+
+  private saltRounds = 10;
+
+  hashPass(pass) {
+    const salt = bcrypt.genSaltSync(this.saltRounds);
+    const hash = bcrypt.hashSync(pass, salt);
+    return hash;
+  }
 
   /**
    * Create new IMAP client and store it for later access
    */
   async createClient(config: ImapFlowOptions) {
-    if (!!this.clients[config.auth.user]) return this.clients[config.auth.user];
+    const { user, pass } = config.auth;
+    if (!!this.clientsCache[user]) return this.getClient(config.auth);
 
     const client = new ImapFlow(config);
-    await client.connect();
+    try {
+      await client.connect();
+    } catch (err) {
+      if (err.serverResponseCode === 'AUTHENTICATIONFAILED')
+        throw new UnauthorizedException(err.responseText);
+    }
 
-    this.clients[config.auth.user] = client;
+    const clientCache = {
+      hashedPass: this.hashPass(pass),
+      client: client,
+    } as IMapClientCache;
+    this.clientsCache[user] = clientCache;
+
     return client;
   }
 
-  getClient(user: string) {
-    return this.clients[user];
+  /**
+   * Check if imap client has been initialized already
+   * Verify authentication and return initialized client
+   */
+  getClient({ user, pass }: { user: string; pass: string }) {
+    const { client, hashedPass } = this.clientsCache[user];
+    if (!client) throw new Error('IMap client not yet initialized.');
+
+    if (!bcrypt.compareSync(pass, hashedPass)) {
+      delete this.clientsCache[user];
+      throw new UnauthorizedException(
+        'Email Password incorrect, please try again.',
+      );
+    }
+    return client;
   }
 
   sequelizeFetchMessageObject(dataArg: FetchMessageObject) {
