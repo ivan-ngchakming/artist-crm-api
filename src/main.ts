@@ -23,7 +23,7 @@ async function bootstrap() {
       /**
        * netlify PR previews
        */
-      /https:\/\/deploy-preview-[0-9]*--artist-crm\.netlify\.app\//,
+      /https:\/\/deploy-preview-[0-9]*--artist-crm\.netlify\.app/,
     ],
   });
   app.use(cookieParser());
